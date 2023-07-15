@@ -44,7 +44,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between py-6 container mx-auto text-white ">
+      <div className="flex items-center justify-between py-6 container mx-auto">
         <div className="flex gap-3 items-center justify-center ">
           <img onClick={setOpen} className="md:hidden" src={menu} alt="Image" />
           <h1 className="text-3xl font-bold">Chapter Quest</h1>

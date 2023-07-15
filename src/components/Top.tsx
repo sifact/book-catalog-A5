@@ -3,7 +3,9 @@ import Navbar from "../layouts/Navbar";
 const Top = () => {
   return (
     <div className="bg-green-900 h-[500px] rounded-bl-[15%]">
-      <Navbar />
+      <div className="text-white">
+        <Navbar />
+      </div>
 
       <div className="flex flex-col gap-8 justify-center  items-center h-[80%]">
         <h1 className="text-white text-6xl font-semibold">
