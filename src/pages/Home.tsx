@@ -1,4 +1,5 @@
 import Categories from "../components/Categories";
+import RecentBooks from "../components/RecentBooks";
 import Top from "../components/Top";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <>
       <Top />
       <Categories />
+      <RecentBooks />
     </>
   );
 };
