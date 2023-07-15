@@ -1,9 +1,10 @@
 import "./App.css";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
     <>
-      <h1 className="text-6xl text-red-500">Hello</h1>
+      <MainLayout />
     </>
   );
 }

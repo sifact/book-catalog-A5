@@ -1,7 +1,13 @@
-import React from "react";
+import Categories from "../components/Categories";
+import Top from "../components/Top";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Top />
+      <Categories />
+    </>
+  );
 };
 
 export default Home;
