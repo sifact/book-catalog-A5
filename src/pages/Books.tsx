@@ -42,7 +42,7 @@ const Book: React.FC<BookProps> = ({ book }) => {
   const { img, title, author, published, genre } = book;
   return (
     <div className="relative space-y-6">
-      <div className="h-[300px] w-[500px] bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg">
+      <div className="h-[300px]  bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg">
         <img
           className="object-cover w-full h-full rounded-lg mix-blend-overlay"
           src={img}

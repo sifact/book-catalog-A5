@@ -1,5 +1,6 @@
 export const books = [
   {
+    id: 1,
     title: "Love Deception",
     img: "/images/book-3.jpg",
     author: "Elena Armas",
@@ -8,6 +9,7 @@ export const books = [
     published: "Jan 2, 2004",
   },
   {
+    id: 2,
     title: "Men's Search For Meaning",
     genre: "Adventure",
     img: "/images/book-4.jpg",
@@ -17,6 +19,7 @@ export const books = [
   },
 
   {
+    id: 3,
     title: "Home Business HandBook",
     author: "JunkyBooks",
     genre: "Politics",
@@ -25,6 +28,7 @@ export const books = [
     desc: "You won’t be amazing at being a home business owner unless and until you condition your brain for entering a business and then making the most of it. And so, how do you accomplish that effectively? Here are a few awesome hints on how you're able to become that amazing home business owner.",
   },
   {
+    id: 4,
     genre: "Programming",
     title: "Object Oriented Programming",
     published: "Dec 8, 2008",
@@ -34,6 +38,7 @@ export const books = [
   },
 
   {
+    id: 5,
     genre: "Nature",
     title: "Basics of Environmental Science",
     author: "Micheal Allaby",
@@ -43,6 +48,7 @@ export const books = [
     img: "/images/book-6.jpg",
   },
   {
+    id: 6,
     genre: "Adventure",
     author: "Alexandre Dumas",
     title: "The count of Monte Cristo",
@@ -51,6 +57,7 @@ export const books = [
     img: "/images/book-7.jpg",
   },
   {
+    id: 7,
     genre: "Language",
     title: "Language Learning",
     author: "Denyze Toffely",
@@ -59,6 +66,7 @@ export const books = [
     img: "/images/book-9.jpg",
   },
   {
+    id: 8,
     genre: "Health",
     title: "Medicinal Herbs",
     author: "James A. Duke",
@@ -67,6 +75,7 @@ export const books = [
     published: "Dec 7, 2013",
   },
   {
+    id: 9,
     genre: "Mystery",
     title: "Tell me why",
     author: "Sandi Wallace",
@@ -75,6 +84,7 @@ export const books = [
     published: "27 June, 2010",
   },
   {
+    id: 10,
     genre: "Fiction",
     title: "Displaced",
     author: "Stephen Drake",

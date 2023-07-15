@@ -1,6 +1,7 @@
 import { useState } from "react";
 import down from "../../public/images/down.png";
 import search from "../../public/images/search.png";
+import { Link } from "react-router-dom";
 
 interface SearchFilterProps {
   title: string;
@@ -96,6 +97,9 @@ const SearchFilter: React.FC<{ books: SearchFilterProps[] }> = ({ books }) => {
           </div>
         )}
       </div>
+      <button className="px-6 py-4 bg-white rounded-lg text-black transition f md:text-xl ">
+        <Link to="/addBook">Add Book</Link>
+      </button>
     </div>
   );
 };
