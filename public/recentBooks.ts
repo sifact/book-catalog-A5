@@ -10,7 +10,7 @@ export const books = [
   {
     title: "Men's Search For Meaning",
     genre: "Adventure",
-    img: "/images/book-3.jpg",
+    img: "/images/book-4.jpg",
     author: "Victor Franki",
     desc: "THIS BOOK HAS NOW LIVED TO SEE nearly one hundred printings in English—in addition to having been published in twenty-one other languages. And the English editions alone have sold more than three million copies. ",
     published: "Feb 2, 2004",

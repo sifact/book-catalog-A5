@@ -15,7 +15,7 @@ const Navbar = () => {
       <div
         className={`${
           isOpen ? "block md:hidden" : "hidden"
-        } fixed z-50 bg-neutral-900/70  inset-0   `}
+        } fixed z-50 bg-neutral-900/70  inset-0    `}
       >
         <div
           style={{ transition: "all 0.3s ease-in-out" }}
@@ -32,7 +32,7 @@ const Navbar = () => {
             alt="Image"
           />
 
-          <div className={`ml-20 md:flex gap-5 hidden`}>
+          <div className={`ml-20 md:flex gap-5 hidden text-xl md:2xl`}>
             <Link to="/men">Books</Link>
             <Link to="/women">Authors</Link>
             <Link to="/about">Request Book</Link>
@@ -49,14 +49,14 @@ const Navbar = () => {
           <img onClick={setOpen} className="md:hidden" src={menu} alt="Image" />
           <h1 className="text-3xl font-bold">Chapter Quest</h1>
 
-          <div className={`ml-32 md:flex gap-5 hidden  `}>
+          <div className={`ml-32 md:flex gap-5 hidden text-xl md:2xl `}>
             <Link to="/men">Books</Link>
             <Link to="/women">Authors</Link>
             <Link to="/about">Request Book</Link>
           </div>
         </div>
 
-        <div className={`ml-20 md:flex gap-5 hidden`}>
+        <div className={`ml-20 md:flex gap-5 hidden text-xl md:2xl`}>
           <Link to="/women">Log in</Link>
           <Link to="/about">Sign up</Link>
         </div>

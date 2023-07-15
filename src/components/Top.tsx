@@ -9,15 +9,15 @@ const Top = () => {
         <h1 className="text-white text-6xl font-semibold">
           Unlock a treasure trove of books
         </h1>
-        <p className="text-white">
+        <p className="text-white text-xl opacity-80">
           Discover, read, and download a wide range of books in one convenient
           hub
         </p>
         <div className="flex gap-6">
-          <button className="px-6 py-3 bg-white rounded-full text-green-400 hover:text-green-500 transition">
+          <button className="px-6 py-3 bg-white rounded-full text-green-400 hover:text-green-500 transition font-semibold md:text-xl">
             Start for free
           </button>
-          <button className="px-6 py-3 bg-white rounded-full text-green-500 hover:text-green-400 transition">
+          <button className="px-6 py-3 bg-white rounded-full text-green-500 hover:text-green-400 transition font-semibold md:text-xl">
             Learn More
           </button>
         </div>
