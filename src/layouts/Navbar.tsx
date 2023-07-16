@@ -1,15 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import menu from "/icon-menu.svg";
 import close from "/icon-close.svg";
+import newRequest from "../utils/newRequest";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navigate = useNavigate();
   const setOpen = () => {
     setIsOpen(!isOpen);
   };
 
+  const currentUserString = localStorage.getItem("currentUser");
+  const currentUser = currentUserString ? JSON.parse(currentUserString) : null;
+
+  const handleLogout = async () => {
+    try {
+      await newRequest.post("/auth/logout");
+      localStorage.setItem("currentUser", null!);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <div
@@ -51,16 +65,35 @@ const Navbar = () => {
             <Link to="/">Chapter Quest</Link>
           </h1>
 
-          <div className={`ml-32 md:flex gap-5 hidden text-xl md:2xl `}>
+          <div
+            className={`ml-32 md:flex justify-center items-center gap-5 hidden text-xl md:2xl `}
+          >
             <Link to="/books">Books</Link>
 
             <Link to="/request">Request Book</Link>
           </div>
         </div>
 
-        <div className={`ml-20 md:flex gap-5 hidden text-xl md:2xl`}>
-          <Link to="/login">Log in</Link>
-          <Link to="/signup">Sign up</Link>
+        <div
+          className={`ml-20 md:flex justify-center items-center gap-5 hidden text-xl md:2xl`}
+        >
+          {currentUser ? (
+            <>
+              <img
+                className="rounded-[50%] w-[40px]"
+                src="/images/noavatar.jpg"
+                alt=""
+              />
+              <Link to="/login" onClick={handleLogout}>
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Signup</Link>
+            </>
+          )}
         </div>
       </div>
     </>
