@@ -6,3 +6,9 @@
   box-sizing: border-box;
   font-family: "Ubuntu", sans-serif;
 }
+
+.carousel .control-dots .dot {
+  background: green !important;
+  width: 20px !important;
+  height: 20px !important;
+}

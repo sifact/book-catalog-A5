@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import Navbar from "../layouts/Navbar";
+import Reviews from "../components/Reviews";
 
 const BookDetails = () => {
   const data = useParams();
@@ -33,6 +34,8 @@ const BookDetails = () => {
           <span className="text-lg">27 Jan, 2003</span>
         </div>
       </div>
+
+      <Reviews />
     </div>
   );
 };
