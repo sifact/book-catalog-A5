@@ -12,3 +12,23 @@
   width: 20px !important;
   height: 20px !important;
 }
+
+.alert-custom-danger {
+  color: #721c24;
+  background: #f8d7da;
+}
+.alert-custom {
+  height: 1.25rem;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  font-size: 0.7rem;
+  border-radius: 0.25rem;
+  letter-spacing: var(--spacing);
+  text-transform: capitalize;
+  /* margin-bottom: 1rem; */
+}
+.alert-custom-success {
+  color: #155724;
+  background: #d4edda;
+}
