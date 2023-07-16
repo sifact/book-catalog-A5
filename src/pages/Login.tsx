@@ -1,9 +1,8 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
-import Alert from "../components/Alert";
 
-// import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+import newRequest from "../utils/newRequest";
 
 export interface AlertProps {
   show?: boolean;
@@ -11,23 +10,36 @@ export interface AlertProps {
   type?: string;
 }
 const Login = () => {
-  const [alert, setAlert] = useState<AlertProps>({
-    show: false,
-    msg: "",
-    type: "",
-  });
-  // const { signIn, googleProviderLogin, login } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      const res = await newRequest.post("/auth/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      navigate("/");
+    } catch (err: any) {
+      setError(err.response.data);
+    }
+  };
+  // const from = location.state?.from?.pathname || "/";
 
   return (
     <div className="min-h-[100vh] flex flex-col justify-center items-center">
-      <form className="w-[400px] p-8 rounded-md shadow-lg">
+      <form
+        className="w-[400px] p-8 rounded-md shadow-lg"
+        onSubmit={handleSubmit}
+      >
         <h1 className="text-2xl font-semibold mb-8 text-center">Login</h1>
-        {alert.show && <Alert {...alert} />}
+
         <div className="mb-3 ">
           <label htmlFor="">Email</label>
           <input
@@ -35,6 +47,7 @@ const Login = () => {
             name="email"
             type="email"
             placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -45,6 +58,7 @@ const Login = () => {
             name="password"
             type="password"
             placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
@@ -60,6 +74,8 @@ const Login = () => {
             Create a New Account
           </Link>
         </small>
+
+        {error && error}
       </form>
     </div>
   );

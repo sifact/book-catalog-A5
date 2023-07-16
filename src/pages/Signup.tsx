@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 import Alert from "../components/Alert";
+import newRequest from "../utils/newRequest";
 
 export interface AlertProps {
   show?: boolean;
@@ -15,6 +16,39 @@ const Signup = () => {
     type: "",
   });
 
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    img: "",
+    country: "",
+    isSeller: false,
+    desc: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e: any) => {
+    setUser((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    // const url = await upload(file);
+    try {
+      await newRequest.post("/auth/register", {
+        ...user,
+        // img: url,
+      });
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="min-h-[100vh] flex flex-col justify-center items-center">
       <form className="w-[400px] p-8 rounded-md shadow-lg">
@@ -27,6 +61,7 @@ const Signup = () => {
             name="email"
             type="email"
             placeholder="email"
+            onChange={handleChange}
           />
         </div>
         <div className="mb-6">
@@ -37,11 +72,13 @@ const Signup = () => {
             name="password"
             type="password"
             placeholder="password"
+            onChange={handleChange}
           />
         </div>
 
         <button
           className="text-xl mb-4  w-full py-4 bg-green-900 rounded-sm text-white"
+          onClick={handleSubmit}
           id="btn-submit"
         >
           Sign up
