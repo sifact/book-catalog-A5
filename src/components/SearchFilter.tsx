@@ -2,22 +2,14 @@ import { useState } from "react";
 import down from "../../public/images/down.png";
 import search from "../../public/images/search.png";
 import { Link } from "react-router-dom";
+import { IBook } from "../types/book";
 
-interface SearchFilterProps {
-  title: string;
-  genre: string;
-  author: string;
-  desc: string;
-  img: string;
-  published: string;
-}
-
-const SearchFilter: React.FC<{ books: SearchFilterProps[] }> = ({ books }) => {
+const SearchFilter: React.FC<{ data: IBook[] }> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("Filter");
   const [year, setYear] = useState(false);
   const [genre, setGenre] = useState(false);
-  const [sort, setSort] = useState("sales");
+  // const [sort, setSort] = useState("sales");
 
   return (
     <div className="flex justify-center gap-12 items-center">
@@ -46,7 +38,7 @@ const SearchFilter: React.FC<{ books: SearchFilterProps[] }> = ({ books }) => {
             </div>
             <hr />
             {genre &&
-              books.map((book) => {
+              data.map((book) => {
                 return (
                   <>
                     <span
@@ -65,21 +57,21 @@ const SearchFilter: React.FC<{ books: SearchFilterProps[] }> = ({ books }) => {
               className="cursor-pointer text-2xl"
               onClick={() => setYear(!year)}
             >
-              Published year
+              publishedDate year
             </div>
             {year && <hr />}
             {year &&
-              books.map((book) => {
+              data.map((book) => {
                 return (
                   <>
                     <span
                       className="cursor-pointer"
                       onClick={() => {
-                        setFilter(book.published);
+                        setFilter(book.publishedDate);
                         setOpen(false);
                       }}
                     >
-                      {book.published}
+                      {book.publishedDate}
                     </span>
                   </>
                 );

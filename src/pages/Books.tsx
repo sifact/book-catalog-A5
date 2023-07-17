@@ -1,8 +1,13 @@
-import { books } from "../../public/recentBooks";
 import SearchFilter from "../components/SearchFilter";
 import Navbar from "../layouts/Navbar";
+import { useGetBooksQuery } from "../redux/api/apiSlice";
+import { IBook } from "../types/book";
 
 const Books = () => {
+  const { data } = useGetBooksQuery(undefined);
+
+  console.log(data);
+
   return (
     <div>
       <div className="bg-green-900 text-white pb-32 rounded-br-[15%] ">
@@ -15,12 +20,14 @@ const Books = () => {
           </p>
         </div>
 
-        <SearchFilter books={books} />
+        <SearchFilter data={data} />
       </div>
       <div className="my-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 container mx-auto">
-        {books.map((book) => (
-          <Book book={book} />
-        ))}
+        {data ? (
+          data.map((book: IBook) => <Book book={book} />)
+        ) : (
+          <>Loading...</>
+        )}
       </div>
     </div>
   );
@@ -28,18 +35,8 @@ const Books = () => {
 
 export default Books;
 
-interface BookProps {
-  book: {
-    title: string;
-    genre: string;
-    author: string;
-    desc: string;
-    img: string;
-    published: string;
-  };
-}
-const Book: React.FC<BookProps> = ({ book }) => {
-  const { img, title, author, published, genre } = book;
+const Book: React.FC<{ book: IBook }> = ({ book }) => {
+  const { img, title, author, publishedDate, genre } = book;
   return (
     <div className="relative space-y-6">
       <div className="h-[300px]  bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg">
@@ -56,7 +53,7 @@ const Book: React.FC<BookProps> = ({ book }) => {
         </div>
         <div className="opacity-60 font-semibold">
           <p>{author}</p>
-          <p>{published}</p>
+          <p>{publishedDate}</p>
         </div>
       </div>
     </div>
