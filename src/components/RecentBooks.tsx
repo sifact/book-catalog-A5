@@ -1,14 +1,22 @@
 import { Link } from "react-router-dom";
-import { books } from "../../public/recentBooks";
+
+import { IBook } from "../types/book";
+import { useGetBooksQuery } from "../redux/api/apiSlice";
 
 const RecentBooks = () => {
+  const { data: books } = useGetBooksQuery(undefined);
   return (
     <div>
       <h1 className="text-5xl font-semibold text-center mb-20">Recent Books</h1>
       <div className="my-32 grid grid-cols-1 md:grid-cols-2  gap-32 container mx-auto">
-        {books.map((book) => (
-          <RecentBook book={book} />
-        ))}
+        {books ? (
+          books.map(
+            (book: IBook, index: number) =>
+              index <= 4 && <RecentBook key={book._id} book={book} />
+          )
+        ) : (
+          <>Loading...</>
+        )}
       </div>
     </div>
   );
@@ -16,21 +24,10 @@ const RecentBooks = () => {
 
 export default RecentBooks;
 
-interface BookProps {
-  book: {
-    id: number;
-    title: string;
-    genre: string;
-    author: string;
-    desc: string;
-    img: string;
-    published: string;
-  };
-}
-const RecentBook: React.FC<BookProps> = ({ book }) => {
-  const { id, img, title, author, published } = book;
+const RecentBook: React.FC<{ book: IBook }> = ({ book }) => {
+  const { _id, img, title, author, publishedDate } = book;
   return (
-    <Link to={`/bookDetails/${id}`}>
+    <Link to={`/bookDetails/${_id}`}>
       <div className="relative">
         <div className="h-[300px] w-[500px] bg-gradient-to-tr from-gray-900 to-green-50">
           <img
@@ -43,7 +40,7 @@ const RecentBook: React.FC<BookProps> = ({ book }) => {
           <h1 className="text-2xl font-semibold">Title: {title}</h1>
           <div className="opacity-60 font-semibold">
             <p>By: {author}</p>
-            <p>Published Date: {published}</p>
+            <p>Published Date: {publishedDate}</p>
           </div>
         </div>
       </div>

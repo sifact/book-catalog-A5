@@ -19,7 +19,7 @@ const Reviews = () => {
           </button>
         </div>
       </div>
-      <Carousel showStatus={false}>
+      <Carousel showThumbs={false} showStatus={false}>
         <Review />
         <Review />
         <Review />
@@ -35,8 +35,8 @@ export default Reviews;
 const Review = () => {
   return (
     <div className="flex container mx-auto justify-center mb-12">
-      <div className="w-[40%] space-y-6 flex flex-col justify-center items-start ">
-        <p className="-mr-16 z-50">
+      <div className="w-[40%] space-y-6 flex flex-col  items-start justify-center">
+        <p className="-mr-16 z-50 text-start">
           "I've been interested in coding for a while but never taken the jump,
           until now. I couldn't recommend this course enough. I'm now in the job
           of my dreams and so excited about the future."

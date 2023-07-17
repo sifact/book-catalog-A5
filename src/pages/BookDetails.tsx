@@ -1,10 +1,15 @@
 import { useParams } from "react-router";
 import Navbar from "../layouts/Navbar";
 import Reviews from "../components/Reviews";
+import { useGetBookQuery } from "../redux/api/apiSlice";
+import { IBook } from "../types/book";
 
 const BookDetails = () => {
-  const data = useParams();
-  console.log(data);
+  const { id } = useParams();
+
+  const { data } = useGetBookQuery(id);
+  const book: IBook = data;
+
   return (
     <div>
       <div className="bg-green-900 text-white pb-8 rounded-br-[15%] ">
@@ -14,24 +19,20 @@ const BookDetails = () => {
         </div>
       </div>
 
-      <div className="my-32 flex">
+      <div className="my-32 flex justify-center items-center">
         <div className="flex-1 h-[500px]">
           <img
-            className="object-cover w-full h-full"
-            src="/images/book-3.jpg"
+            className="object-cover w-full rounded-md h-full"
+            src={book?.img}
             alt=""
           />
         </div>
         <div className="flex-1 flex flex-col gap-4 p-32">
-          <h1 className="text-xl font-bold">La mesarable</h1>
-          <p className="text-lg">Fiction</p>
-          <p className="text-xl opacity-60">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto
-            magnam odit necessitatibus consectetur nostrum a excepturi autem.
-            Totam, laborum corrupti?
-          </p>
-          <span className="text-lg">Mr. X</span>
-          <span className="text-lg">27 Jan, 2003</span>
+          <h1 className="text-xl font-bold">{book?.title}</h1>
+          <p className="text-lg">{book?.genre}</p>
+          <p className="text-xl opacity-60">{book?.desc}</p>
+          <span className="text-lg">{book?.author}</span>
+          <span className="text-lg">{book?.publishedDate}</span>
         </div>
       </div>
 
