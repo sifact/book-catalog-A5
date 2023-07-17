@@ -6,8 +6,6 @@ import { IBook } from "../types/book";
 const Books = () => {
   const { data } = useGetBooksQuery(undefined);
 
-  console.log(data);
-
   return (
     <div>
       <div className="bg-green-900 text-white pb-32 rounded-br-[15%] ">
@@ -24,7 +22,7 @@ const Books = () => {
       </div>
       <div className="my-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 container mx-auto">
         {data ? (
-          data.map((book: IBook) => <Book book={book} />)
+          data.map((book: IBook) => <Book key={book._id} book={book} />)
         ) : (
           <>Loading...</>
         )}

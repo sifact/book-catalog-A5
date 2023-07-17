@@ -47,6 +47,7 @@ const SearchFilter: React.FC<{ data: IBook[] }> = ({ data }) => {
                         setFilter(book.genre);
                         setOpen(false);
                       }}
+                      key={book._id}
                     >
                       {book.genre}
                     </span>
@@ -66,6 +67,7 @@ const SearchFilter: React.FC<{ data: IBook[] }> = ({ data }) => {
                   <>
                     <span
                       className="cursor-pointer"
+                      key={book._id}
                       onClick={() => {
                         setFilter(book.publishedDate);
                         setOpen(false);
