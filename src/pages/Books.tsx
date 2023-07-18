@@ -3,6 +3,7 @@ import SearchFilter from "../components/SearchFilter";
 import Navbar from "../layouts/Navbar";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
+import { Link } from "react-router-dom";
 
 const Books = () => {
   const [filters, setFilters] = useState<IFilters>({
@@ -13,7 +14,7 @@ const Books = () => {
 
   const { search, genre, year } = filters;
 
-  const { data } = useGetBooksQuery({
+  const { data, refetch } = useGetBooksQuery({
     ...(search && { search }),
     ...(genre && { genre }),
     ...(year && { year }),
@@ -31,7 +32,11 @@ const Books = () => {
           </p>
         </div>
 
-        <SearchFilter filters={filters} setFilters={setFilters} />
+        <SearchFilter
+          filters={filters}
+          refetch={refetch}
+          setFilters={setFilters}
+        />
       </div>
       <div className="my-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 container mx-auto">
         {data ? (
@@ -47,26 +52,28 @@ const Books = () => {
 export default Books;
 
 const Book: React.FC<{ book: IBook }> = ({ book }) => {
-  const { img, title, author, publishedDate, genre } = book;
+  const { _id, img, title, author, publishedDate, genre } = book;
   return (
-    <div className="relative space-y-6">
-      <div className="h-[300px]  bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg">
-        <img
-          className="object-cover w-full h-full rounded-lg mix-blend-overlay"
-          src={img}
-          alt=""
-        />
-      </div>
-      <div className="rounded-lg space-y-3 ">
-        <div className="flex justify-between items-center">
-          <h1 className="text-xl font-semibold">{title}</h1>
-          <p className="opacity-60 text-xl">{genre}</p>
+    <Link to={`/bookDetails/${_id}`}>
+      <div className="relative space-y-6">
+        <div className="h-[300px]  bg-gradient-to-tr from-gray-900 to-green-50 rounded-lg">
+          <img
+            className="object-cover w-full h-full rounded-lg mix-blend-overlay"
+            src={img}
+            alt=""
+          />
         </div>
-        <div className="opacity-60 font-semibold">
-          <p>{author}</p>
-          <p>{publishedDate}</p>
+        <div className="rounded-lg space-y-3 ">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-semibold">{title}</h1>
+            <p className="opacity-60 text-xl">{genre}</p>
+          </div>
+          <div className="opacity-60 font-semibold">
+            <p>{author}</p>
+            <p>{publishedDate}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

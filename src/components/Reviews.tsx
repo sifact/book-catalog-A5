@@ -3,19 +3,30 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import newRequest from "../utils/newRequest";
 import { useGetReviewsQuery } from "../redux/api/apiSlice";
 import { IReview } from "../types/review";
+import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface ReviewsProps {
   id: string;
 }
 
 const Reviews: React.FC<ReviewsProps> = ({ id }) => {
+  const userString = localStorage.getItem("currentUser");
+  const user = userString ? JSON.parse(userString) : null;
+
   const { data, refetch } = useGetReviewsQuery(id, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 30000,
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (!user) {
+      navigate("/login");
+    }
 
     const form = e.target;
 
@@ -26,7 +37,18 @@ const Reviews: React.FC<ReviewsProps> = ({ id }) => {
         review,
         id,
       });
+
+      toast.success("Review Added", {
+        icon: "👏",
+        position: "bottom-right",
+        // style: {
+        //   borderRadius: "10px",
+        //   background: "#333",
+        //   color: "#fff",
+        // },
+      });
       refetch();
+      form.reset();
     } catch (err: any) {
       console.log(err);
     }

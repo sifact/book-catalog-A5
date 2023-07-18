@@ -3,13 +3,31 @@ import Navbar from "../layouts/Navbar";
 import Reviews from "../components/Reviews";
 import { useGetBookQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
+import { Link, useNavigate } from "react-router-dom";
+import newRequest from "../utils/newRequest";
+import { toast } from "react-hot-toast";
 
 const BookDetails = () => {
   const { id } = useParams();
 
-  const { data } = useGetBookQuery(id);
+  const { data, refetch } = useGetBookQuery(id);
   const book: IBook = data;
 
+  const navigate = useNavigate();
+  const handleDelete = async () => {
+    const agree = window.confirm("Are you sure you wanna delete this Book?");
+    if (agree) {
+      try {
+        await newRequest.delete(`book/${id}`);
+        toast.success("Book deleted...");
+        refetch();
+        navigate("/books");
+      } catch (error: any) {
+        toast.error(error.response.data.message);
+        console.log(error.response.data.message);
+      }
+    }
+  };
   return (
     <div>
       <div className="bg-green-900 text-white pb-8 rounded-br-[15%] ">
@@ -33,6 +51,20 @@ const BookDetails = () => {
           <p className="text-xl opacity-60">{book?.desc}</p>
           <span className="text-lg">{book?.author}</span>
           <span className="text-lg">{book?.publishedDate}</span>
+          <div className="space-x-8 mt-4">
+            <Link to={`/editBook/${id}`}>
+              <button className="px-6 py-3 bg-green-400 rounded-full text-white transition font-semibold md:text-xl">
+                Edit Book
+              </button>
+            </Link>
+
+            <button
+              className="px-6 py-3 bg-red-500 rounded-full text-white transition font-semibold md:text-xl"
+              onClick={handleDelete}
+            >
+              Delete Book
+            </button>
+          </div>
         </div>
       </div>
 

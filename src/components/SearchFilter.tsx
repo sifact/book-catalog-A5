@@ -8,11 +8,13 @@ import { useGetFilterTermsQuery } from "../redux/api/apiSlice";
 interface ISearchFilterProps {
   filters: IFilters;
   setFilters: React.Dispatch<React.SetStateAction<IFilters>>;
+  refetch: any;
 }
 
 const SearchFilter: React.FC<ISearchFilterProps> = ({
   filters,
   setFilters,
+  refetch,
 }) => {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("Filter");

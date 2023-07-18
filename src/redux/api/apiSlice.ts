@@ -42,6 +42,17 @@ export const api = createApi({
       query: (id) => `review/${id}`,
       providesTags: ["Reviews"],
     }),
+
+    editBook: build.mutation({
+      query: ({ body, id }) => ({
+        url: `/book/${id}`,
+        method: "PATCH",
+        body: {
+          body,
+        },
+      }),
+      invalidatesTags: ["Book"],
+    }),
   }),
 });
 
@@ -51,4 +62,5 @@ export const {
   useGetReviewsQuery,
   useGetBookQuery,
   useGetFilterTermsQuery,
+  useEditBookMutation,
 } = api;

@@ -1,8 +1,13 @@
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import newRequest from "../utils/newRequest";
 import Navbar from "../layouts/Navbar";
 
-const AddBook = () => {
+import { useParams } from "react-router-dom";
+
+const EditBook = () => {
+  const { id } = useParams();
+  console.log(id);
+
   const handleSubmit = async (e: {
     preventDefault: () => void;
     target: any;
@@ -15,23 +20,23 @@ const AddBook = () => {
     const genre = form.genre.value;
     const author = form.author.value;
     const published = form.published.value;
-    const desc = form.desc.value;
+    const branch = form.branch.value;
 
     const bookInfo = {
       title,
       genre,
       author,
-      publishedDate: published,
-      desc,
+      published,
+      branch,
     };
-    console.log(bookInfo);
+
     try {
-      await newRequest.post("book/", bookInfo);
-      toast.success("Book added successfully...");
+      await newRequest.patch(`book/${id}`, bookInfo);
+      toast.success("Edited...");
       form.reset();
     } catch (error: any) {
-      console.log(error.response.data.message);
       toast.error(error.response.data.message);
+      console.log(error.response.data.message);
     }
   };
 
@@ -40,7 +45,7 @@ const AddBook = () => {
       <div className="bg-green-900 text-white text-lg pb-8 rounded-br-[15%] mb-16">
         <Navbar />
         <div className="my-4  text-center">
-          <h1 className="text-4xl font-semibold">Add Book</h1>
+          <h1 className="text-4xl font-semibold">Edit Book</h1>
         </div>
       </div>
       <div className=" w-full items-center relative container mx-auto">
@@ -48,7 +53,7 @@ const AddBook = () => {
           <div className="w-[500px] md:w-[900px] h-[500px]">
             <img
               className="object-cover object-bottom w-full h-full rounded-lg"
-              src="/images/bg-1.jpg"
+              src="/images/bg-2.jpg"
               alt=""
             />
           </div>
@@ -109,12 +114,12 @@ const AddBook = () => {
             <div className="flex justify-between items-center gap-8 ">
               <div className="mb-4">
                 <label className="block font-medium mb-2" htmlFor="Quality">
-                  Description
+                  Branch
                 </label>
                 <input
                   className="border-[2.5px] rounded-sm border-green-700 p-4 w-full  outline-none"
                   type="text"
-                  name="desc"
+                  name="branch"
                 />
               </div>
 
@@ -131,4 +136,4 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+export default EditBook;
