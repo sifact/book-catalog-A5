@@ -70,7 +70,14 @@ const Navbar = () => {
           >
             <Link to="/books">Books</Link>
 
-            <Link to="/request">Request Book</Link>
+            {/* <Link to="/request">Request Book</Link> */}
+
+            {currentUser && (
+              <>
+                <Link to="/wishList">WishList</Link>
+                <Link to="/readingList">Reading List</Link>
+              </>
+            )}
           </div>
         </div>
 
