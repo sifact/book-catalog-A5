@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
-import Alert from "../components/Alert";
+
 import newRequest from "../utils/newRequest";
+import { toast } from "react-hot-toast";
 
 export interface AlertProps {
   show?: boolean;
@@ -10,12 +11,6 @@ export interface AlertProps {
   type?: string;
 }
 const Signup = () => {
-  const [alert, setAlert] = useState<AlertProps>({
-    show: false,
-    msg: "",
-    type: "",
-  });
-
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -39,9 +34,11 @@ const Signup = () => {
         ...user,
         // img: url,
       });
+      toast.success("User created successfully");
       navigate("/");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      toast.error(err);
     }
   };
 
@@ -49,7 +46,7 @@ const Signup = () => {
     <div className="min-h-[100vh] flex flex-col justify-center items-center">
       <form className="w-[400px] p-8 rounded-md shadow-lg">
         <h1 className="text-2xl font-semibold mb-8 text-center">Signup</h1>
-        {alert.show && <Alert {...alert} />}
+
         <div className="mb-3 ">
           <label htmlFor="">Username</label>
           <input

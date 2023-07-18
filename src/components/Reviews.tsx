@@ -4,7 +4,7 @@ import newRequest from "../utils/newRequest";
 import { useGetReviewsQuery } from "../redux/api/apiSlice";
 import { IReview } from "../types/review";
 import toast from "react-hot-toast";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 interface ReviewsProps {
   id: string;
@@ -33,7 +33,7 @@ const Reviews: React.FC<ReviewsProps> = ({ id }) => {
     const review = form.textarea.value;
 
     try {
-      const res = await newRequest.post(`/review`, {
+      await newRequest.post(`/review`, {
         review,
         id,
       });

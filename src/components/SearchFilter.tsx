@@ -14,7 +14,6 @@ interface ISearchFilterProps {
 const SearchFilter: React.FC<ISearchFilterProps> = ({
   filters,
   setFilters,
-  refetch,
 }) => {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("Filter");

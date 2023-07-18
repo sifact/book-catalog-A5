@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://book-catelog-a5-server-sifact.vercel.app/api/v1",
+  }),
   reducerPath: "adminApi",
 
   tagTypes: ["Books", "Book", "Filter", "Reviews"],
