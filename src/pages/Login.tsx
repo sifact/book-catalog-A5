@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -15,8 +15,9 @@ const Login = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
 
+  const from = location.state?.from?.pathname || "/";
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
@@ -25,12 +26,12 @@ const Login = () => {
         password,
       });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
-      navigate("/");
+      // navigate("/");
+      navigate(from, { replace: true });
     } catch (err: any) {
       setError(err.response.data);
     }
   };
-  // const from = location.state?.from?.pathname || "/";
 
   return (
     <div className="min-h-[100vh] flex flex-col justify-center items-center">

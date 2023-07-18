@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
 import { IBook } from "../types/book";
-import { useGetBooksQuery } from "../redux/api/apiSlice";
+import { useGetFilterTermsQuery } from "../redux/api/apiSlice";
 
 const RecentBooks = () => {
-  const { data: books } = useGetBooksQuery(undefined);
+  const { data: books } = useGetFilterTermsQuery(undefined);
   return (
     <div>
       <h1 className="text-5xl font-semibold text-center mb-20">Recent Books</h1>
