@@ -1,10 +1,40 @@
+import { useState } from "react";
 import SearchFilter from "../components/SearchFilter";
 import Navbar from "../layouts/Navbar";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
 
 const Books = () => {
-  const { data } = useGetBooksQuery(undefined);
+  const [filters, setFilters] = useState<IFilters>({
+    genre: "",
+    year: "",
+    search: "",
+  });
+  // const [data, setData] = useState("");
+
+  const { search, genre, year } = filters;
+
+  const { data } = useGetBooksQuery({
+    ...(search && { search }),
+    ...(genre && { genre }),
+    ...(year && { year }),
+  });
+
+  console.log(filters);
+
+  // useEffect(() => {
+  //   if () {
+  //     // Perform API request using useGetBooksQuery
+  //     const { data } = useGetBooksQuery(
+  //       search && genre && year&&
+  //       {
+  //       search,
+  //       genre,
+  //       year,
+  //     });
+  //     setData(data);
+  //   }
+  // }, [search, genre, year]);
 
   return (
     <div>
@@ -18,7 +48,7 @@ const Books = () => {
           </p>
         </div>
 
-        <SearchFilter data={data} />
+        <SearchFilter filters={filters} setFilters={setFilters} />
       </div>
       <div className="my-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 container mx-auto">
         {data ? (

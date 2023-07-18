@@ -3,13 +3,23 @@ import down from "../../public/images/down.png";
 import search from "../../public/images/search.png";
 import { Link } from "react-router-dom";
 import { IBook } from "../types/book";
+import { useGetFilterTermsQuery } from "../redux/api/apiSlice";
 
-const SearchFilter: React.FC<{ data: IBook[] }> = ({ data }) => {
+interface ISearchFilterProps {
+  filters: IFilters;
+  setFilters: React.Dispatch<React.SetStateAction<IFilters>>;
+}
+
+const SearchFilter: React.FC<ISearchFilterProps> = ({
+  filters,
+  setFilters,
+}) => {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("Filter");
   const [year, setYear] = useState(false);
   const [genre, setGenre] = useState(false);
-  // const [sort, setSort] = useState("sales");
+
+  const { data } = useGetFilterTermsQuery(undefined);
 
   return (
     <div className="flex justify-center gap-12 items-center">
@@ -38,13 +48,17 @@ const SearchFilter: React.FC<{ data: IBook[] }> = ({ data }) => {
             </div>
             <hr />
             {genre &&
-              data.map((book) => {
+              data.map((book: IBook) => {
                 return (
                   <>
                     <span
                       className="cursor-pointer"
                       onClick={() => {
                         setFilter(book.genre);
+                        setFilters({
+                          ...filters,
+                          genre: book.genre,
+                        });
                         setOpen(false);
                       }}
                       key={book._id}
@@ -62,18 +76,18 @@ const SearchFilter: React.FC<{ data: IBook[] }> = ({ data }) => {
             </div>
             {year && <hr />}
             {year &&
-              data.map((book) => {
+              data.map((book: IBook) => {
                 return (
                   <>
                     <span
                       className="cursor-pointer"
                       key={book._id}
                       onClick={() => {
-                        setFilter(book.publishedDate);
+                        setFilter(book.year);
                         setOpen(false);
                       }}
                     >
-                      {book.publishedDate}
+                      {book.year}
                     </span>
                   </>
                 );

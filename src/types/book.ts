@@ -6,4 +6,5 @@ export interface IBook {
   desc: string;
   img: string;
   publishedDate: string;
+  year: string;
 }
