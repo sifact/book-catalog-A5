@@ -18,8 +18,13 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
   const [filter, setFilter] = useState("Filter");
   const [year, setYear] = useState(false);
   const [genre, setGenre] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { data } = useGetFilterTermsQuery(undefined);
+
+  const handleSearch = () => {
+    setFilters({ ...filters, year: "", genre: "", search: searchTerm });
+  };
 
   return (
     <div className="flex justify-center gap-12 items-center">
@@ -28,8 +33,9 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
           className="outline-none border-none text-black"
           type="text"
           placeholder="Search by genre, name"
+          onChange={(e: any) => setSearchTerm(e.target.value)}
         />
-        <button>
+        <button onClick={handleSearch}>
           <img width={20} src={search} alt="" />
         </button>
       </div>
@@ -57,6 +63,8 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
                         setFilter(book.genre);
                         setFilters({
                           ...filters,
+                          search: "",
+                          year: "",
                           genre: book.genre,
                         });
                         setOpen(false);
@@ -72,7 +80,7 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
               className="cursor-pointer text-2xl"
               onClick={() => setYear(!year)}
             >
-              publishedDate year
+              published years
             </div>
             {year && <hr />}
             {year &&
@@ -84,6 +92,12 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
                       key={book._id}
                       onClick={() => {
                         setFilter(book.year);
+                        setFilters({
+                          ...filters,
+                          search: "",
+                          genre: "",
+                          year: book.year,
+                        });
                         setOpen(false);
                       }}
                     >
@@ -92,16 +106,6 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
                   </>
                 );
               })}
-          </div>
-        )}
-        {open && (
-          <div className="rightMenu">
-            {/* {sort === "sales" ? (
-              <span onClick={() => reSort("createdAt")}>Newest</span>
-            ) : (
-              <span onClick={() => reSort("sales")}>Best Selling</span>
-            )}
-            <span onClick={() => reSort("sales")}>Popular</span> */}
           </div>
         )}
       </div>

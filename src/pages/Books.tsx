@@ -10,7 +10,6 @@ const Books = () => {
     year: "",
     search: "",
   });
-  // const [data, setData] = useState("");
 
   const { search, genre, year } = filters;
 
@@ -19,22 +18,6 @@ const Books = () => {
     ...(genre && { genre }),
     ...(year && { year }),
   });
-
-  console.log(filters);
-
-  // useEffect(() => {
-  //   if () {
-  //     // Perform API request using useGetBooksQuery
-  //     const { data } = useGetBooksQuery(
-  //       search && genre && year&&
-  //       {
-  //       search,
-  //       genre,
-  //       year,
-  //     });
-  //     setData(data);
-  //   }
-  // }, [search, genre, year]);
 
   return (
     <div>
