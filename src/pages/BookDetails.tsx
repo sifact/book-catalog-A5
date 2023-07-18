@@ -36,7 +36,7 @@ const BookDetails = () => {
         </div>
       </div>
 
-      <Reviews />
+      <Reviews id={id!} />
     </div>
   );
 };

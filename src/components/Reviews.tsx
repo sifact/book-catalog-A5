@@ -1,14 +1,49 @@
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import newRequest from "../utils/newRequest";
+import { useGetReviewsQuery } from "../redux/api/apiSlice";
+import { IReview } from "../types/review";
 
-const Reviews = () => {
+interface ReviewsProps {
+  id: string;
+}
+
+const Reviews: React.FC<ReviewsProps> = ({ id }) => {
+  const { data, refetch } = useGetReviewsQuery(id, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const review = form.textarea.value;
+
+    try {
+      const res = await newRequest.post(`/review`, {
+        review,
+        id,
+      });
+      refetch();
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <div className="mb-32 bg-green-200 py-8 rounded-bl-[15%] rounded-tr-[15%]">
-        <div className="flex flex-col gap-6 w-[300px] mx-auto">
+        <form
+          action="
+          "
+          className="flex flex-col gap-6 w-[300px] mx-auto"
+          onSubmit={handleSubmit}
+        >
           <textarea
             className="p-4 outline-none rounded-md border-[2.5px]"
-            name=""
+            name="textarea"
             id=""
             cols={30}
             rows={10}
@@ -17,14 +52,16 @@ const Reviews = () => {
           <button className="px-6 py-3 bg-green-900 text-white rounded-full   font-semibold">
             submit
           </button>
-        </div>
+        </form>
       </div>
       <Carousel showThumbs={false} showStatus={false}>
-        <Review />
-        <Review />
-        <Review />
-        <Review />
-        <Review />
+        {data ? (
+          data.map((review: IReview) => (
+            <Review key={review._id} review={review} />
+          ))
+        ) : (
+          <>Loading..</>
+        )}
       </Carousel>
     </div>
   );
@@ -32,22 +69,21 @@ const Reviews = () => {
 
 export default Reviews;
 
-const Review = () => {
+interface ReviewProps {
+  review: IReview;
+}
+const Review: React.FC<ReviewProps> = ({ review }) => {
   return (
     <div className="flex container mx-auto justify-center mb-12">
       <div className="w-[40%] space-y-6 flex flex-col  items-start justify-center">
-        <p className="-mr-16 z-50 text-start">
-          "I've been interested in coding for a while but never taken the jump,
-          until now. I couldn't recommend this course enough. I'm now in the job
-          of my dreams and so excited about the future."
-        </p>
-        <span>Tanya Sinclair</span>
+        <p className="-mr-16 z-50 text-start">{review.review}</p>
+        <span>{review.userId.name}</span>
       </div>
 
-      <div className="w-[30%] h-[300px] relative bg-gradient-to-tl from-gray-900 to-green-200">
+      <div className="w-[30%]">
         <img
-          className="mix-blend-overlay object-cover h-full w-full rounded-md"
-          src="/images/bg-1.jpg"
+          className="object-cover h-full w-full rounded-[50%]"
+          src="/images/user.jpg"
           alt=""
         />
       </div>

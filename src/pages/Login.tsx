@@ -20,6 +20,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
     try {
       const res = await newRequest.post("/auth/login", {
         email,

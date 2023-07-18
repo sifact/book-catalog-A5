@@ -20,14 +20,10 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
-    img: "",
-    country: "",
-    isSeller: false,
-    desc: "",
   });
 
   const navigate = useNavigate();
-
+  console.log(user);
   const handleChange = (e: any) => {
     setUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -54,6 +50,16 @@ const Signup = () => {
       <form className="w-[400px] p-8 rounded-md shadow-lg">
         <h1 className="text-2xl font-semibold mb-8 text-center">Signup</h1>
         {alert.show && <Alert {...alert} />}
+        <div className="mb-3 ">
+          <label htmlFor="">Username</label>
+          <input
+            className="w-full p-3 border-[1.9px] border-gray-600 rounded-sm outline-green-900 mt-2"
+            name="name"
+            type="text"
+            placeholder="username"
+            onChange={handleChange}
+          />
+        </div>
         <div className="mb-3 ">
           <label htmlFor="">Email</label>
           <input
