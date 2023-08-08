@@ -1,31 +1,34 @@
 import { useParams } from "react-router";
 import Navbar from "../layouts/Navbar";
 import Reviews from "../components/Reviews";
-import { useGetBookQuery } from "../redux/api/apiSlice";
+import { useDeleteBookMutation, useGetBookQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/book";
 import { Link, useNavigate } from "react-router-dom";
-import newRequest from "../utils/newRequest";
+
 import { toast } from "react-hot-toast";
 
 const BookDetails = () => {
   const { id } = useParams();
 
-  const { data, refetch } = useGetBookQuery(id);
+  const { data } = useGetBookQuery(id);
+  const [deleteBook, {}] = useDeleteBookMutation();
   const book: IBook = data;
 
   const navigate = useNavigate();
+
   const handleDelete = async () => {
     const agree = window.confirm("Are you sure you wanna delete this Book?");
     if (agree) {
-      try {
-        await newRequest.delete(`book/${id}`);
-        toast.success("Book deleted...");
-        refetch();
-        navigate("/books");
-      } catch (error: any) {
-        toast.error(error.response.data.message);
-        console.log(error.response.data.message);
-      }
+      deleteBook(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Book is deleted...");
+          navigate("/books");
+        })
+        .catch((error) => {
+          toast.error(error.data.message);
+          console.log(error.data.message);
+        });
     }
   };
   return (

@@ -1,14 +1,23 @@
 import { toast } from "react-hot-toast";
-import newRequest from "../utils/newRequest";
+
 import Navbar from "../layouts/Navbar";
+import { useAddBookMutation } from "../redux/api/apiSlice";
+import { useState } from "react";
+import upload from "../utils/upload";
 
 const AddBook = () => {
+  const [addBook, {}] = useAddBookMutation();
+  const [file, setFile] = useState(null);
+  console.log(file);
+
   const handleSubmit = async (e: {
     preventDefault: () => void;
     target: any;
   }) => {
     e.preventDefault();
 
+    const url = await upload(file);
+    console.log(url);
     const form = e.target;
 
     const title = form.title.value;
@@ -23,20 +32,24 @@ const AddBook = () => {
       author,
       publishedDate: published,
       desc,
+      img: url,
     };
-    console.log(bookInfo);
-    try {
-      await newRequest.post("book/", bookInfo);
-      toast.success("Book added successfully...");
-      form.reset();
-    } catch (error: any) {
-      console.log(error.response.data.message);
-      toast.error(error.response.data.message);
-    }
+
+    addBook(bookInfo)
+      .unwrap()
+      .then(() => {
+        // The promise resolves when the mutation is successful
+        // The toast should be shown only after the successful mutation
+        toast.success("Boo is added...");
+      })
+      .catch((error) => {
+        toast.error("Something went wrong...");
+        console.log(error);
+      });
   };
 
   return (
-    <div className="pb-80">
+    <div className="pb-96">
       <div className="bg-green-900 text-white text-lg pb-8 rounded-br-[15%] mb-16">
         <Navbar />
         <div className="my-4  text-center">
@@ -83,15 +96,16 @@ const AddBook = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center gap-8 ">
+            <div className="flex justify-between items-center gap-8 text-xl">
               <div className="mb-4">
-                <label className="block font-medium mb-2" htmlFor="Quantity">
+                <label className="block font-medium mb-2" htmlFor="Athor">
                   Author
                 </label>
                 <input
                   className="border-[2.5px] rounded-sm border-green-700 p-4 w-full  outline-none"
                   type="text"
                   name="author"
+                  required
                 />
               </div>
               <div className="mb-4">
@@ -102,27 +116,34 @@ const AddBook = () => {
                   className="border-[2.5px] rounded-sm border-green-700 p-4 w-full  outline-none"
                   type="text"
                   name="published"
+                  required
                 />
               </div>
             </div>
 
-            <div className="flex justify-between items-center gap-8 ">
-              <div className="mb-4">
-                <label className="block font-medium mb-2" htmlFor="Quality">
-                  Description
-                </label>
-                <input
-                  className="border-[2.5px] rounded-sm border-green-700 p-4 w-full  outline-none"
-                  type="text"
-                  name="desc"
-                />
-              </div>
+            <div className="mb-4 w-full text-xl">
+              <label className="block font-medium mb-2" htmlFor="Quality">
+                Description
+              </label>
+              <input
+                className="border-[2.5px] rounded-sm border-green-700 p-4 w-full  outline-none"
+                type="text"
+                name="desc"
+                required
+              />
+            </div>
+            <div className="my-4 w-full flex flex-col text-xl">
+              <label htmlFor="">Image</label>
+              <input
+                type="file"
+                onChange={(e: any) => setFile(e.target.files[0])}
+              />
+            </div>
 
-              <div className="text-right">
-                <button className="bg-green-800 py-4 px-6 text-white rounded-full text-xl hover:bg-green-900">
-                  Submit
-                </button>
-              </div>
+            <div className="text-right">
+              <button className="bg-green-800 py-4 px-6 text-white rounded-full text-xl hover:bg-green-900">
+                Submit
+              </button>
             </div>
           </form>
         </div>

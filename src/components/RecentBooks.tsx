@@ -5,6 +5,7 @@ import { useGetFilterTermsQuery } from "../redux/api/apiSlice";
 
 const RecentBooks = () => {
   const { data: books } = useGetFilterTermsQuery(undefined);
+
   return (
     <div>
       <h1 className="text-5xl font-semibold text-center mb-20">Recent Books</h1>
@@ -36,11 +37,11 @@ const RecentBook: React.FC<{ book: IBook }> = ({ book }) => {
             alt=""
           />
         </div>
-        <div className="bg-green-100 max-w-fit p-6 rounded-md space-y-3 absolute bottom-[-20%] right-[-1%]">
-          <h1 className="text-2xl font-semibold">Title: {title}</h1>
+        <div className="bg-green-100 max-w-fit p-6 rounded-md space-y-3 absolute bottom-[-20%] right-[15%]">
+          <h1 className="text-2xl font-semibold">{title}</h1>
           <div className="opacity-60 font-semibold">
-            <p>By: {author}</p>
-            <p>Published Date: {publishedDate}</p>
+            <p>{author}</p>
+            <p>{publishedDate}</p>
           </div>
         </div>
       </div>

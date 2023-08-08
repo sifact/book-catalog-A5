@@ -6,7 +6,8 @@ const upload = async (file: any) => {
   data.append("upload_preset", "fiverr");
 
   try {
-    const res = await axios.post(import.meta.env.VITE_UPLOAD_LINK, data);
+    // const res = await axios.post(import.meta.env.VITE_UPLOAD_LINK, data);
+    const res = await axios.post(import.meta.env.VITE_UPLOAD_URL, data);
 
     const { url } = res.data;
     return url;

@@ -71,7 +71,6 @@ const EditBook = () => {
                   type="text"
                   id="name"
                   name="title"
-                  required
                 />
               </div>
               <div className="mb-4 text-xl">
@@ -83,7 +82,6 @@ const EditBook = () => {
                   type="text"
                   id="genre"
                   name="genre"
-                  required
                 />
               </div>
             </div>
